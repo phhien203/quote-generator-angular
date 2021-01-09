@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { Quote } from './components/quote/quote.interface';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, } from '@angular/core';
+import { INITIAL_QUOTE, Quote } from './components/quote/quote.interface';
+import { Observable, Subject } from 'rxjs';
 import { QuoteService } from './services/quote/quote.service';
-import { switchMap } from 'rxjs/operators';
-import { LocalQuoteService } from './services/quote/local-quote.service';
+import { startWith, switchMap } from 'rxjs/operators';
 import { QUOTE_SERVICE } from './tokens/quote-service.token';
 import { WINDOW } from './tokens/window.token';
+import { ForismaticQuoteService } from './services/quote/forismatic-quote.service';
 
 @Component({
   selector: 'app-root',
@@ -14,23 +14,24 @@ import { WINDOW } from './tokens/window.token';
   providers: [
     {
       provide: QUOTE_SERVICE,
-      useClass: LocalQuoteService,
+      useClass: ForismaticQuoteService,
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
-  private readonly newQuote$$ = new BehaviorSubject<void>(undefined);
+  private readonly newQuote$$ = new Subject<void>();
   quote$: Observable<Quote>;
 
   constructor(
     @Inject(WINDOW) private readonly window: Window,
-    @Inject(QUOTE_SERVICE) private readonly quoteService: QuoteService
+    @Inject(QUOTE_SERVICE) public readonly quoteService: QuoteService
   ) {}
 
   ngOnInit(): void {
     this.quote$ = this.newQuote$$.pipe(
-      switchMap(() => this.quoteService.getQuote())
+      switchMap(() => this.quoteService.getQuote()),
+      startWith(INITIAL_QUOTE),
     );
   }
 

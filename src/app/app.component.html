@@ -1,5 +1,6 @@
 <app-quote
   [quote]="quote$ | async"
+  [loadingQuote]="quoteService.loadingQuote$ | async"
   (tweetQuote)="onTweetQuote($event)"
   (newQuote)="onNewQuote()"
 ></app-quote>

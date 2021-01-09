@@ -6,7 +6,7 @@ import { QUOTES } from '../../data/quotes';
 
 @Injectable()
 export class LocalQuoteService implements QuoteService {
-  loadingQuote: Observable<boolean>;
+  loadingQuote$: Observable<boolean>;
 
   getQuote(): Observable<Quote> {
     return of(QUOTES[Math.floor(Math.random() * QUOTES.length)]);

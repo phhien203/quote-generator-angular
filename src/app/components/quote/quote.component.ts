@@ -12,6 +12,7 @@ export class QuoteComponent {
   faTwitter = faTwitter;
 
   @Input() quote: Quote;
+  @Input() loadingQuote: boolean;
 
   @Output() tweetQuote = new EventEmitter<Quote>();
   @Output() newQuote = new EventEmitter();
