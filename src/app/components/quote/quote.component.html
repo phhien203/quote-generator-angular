@@ -1,0 +1,26 @@
+<!-- Quote -->
+<div
+  class="quote-text"
+  [class.long-quote]="quote.text.length > 50"
+>
+  <i class="fas fa-quote-left"></i>
+  <span>{{ quote.text }}</span>
+</div>
+
+<!-- Author -->
+<div class="quote-author">
+  <span>{{ quote.author }}</span>
+</div>
+
+<!-- Buttons -->
+<div class="button-container">
+  <button
+    class="twitter-button"
+    title="Tweet this!"
+    (click)="tweetQuote.emit(quote)"
+  >
+    <fa-icon [icon]="faTwitter"></fa-icon>
+  </button>
+
+  <button (click)="newQuote.emit()">New Quote</button>
+</div>
