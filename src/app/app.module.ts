@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, QuoteComponent],
-  imports: [BrowserModule, HttpClientModule , FontAwesomeModule],
+  imports: [BrowserModule.withServerTransition({ appId: 'serverApp' }), HttpClientModule , FontAwesomeModule],
   providers: [],
   bootstrap: [AppComponent],
 })
